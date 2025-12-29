@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PredictX Bikes – Buy & Sell Used Bikes</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #f4f7fb;
+        --card: #ffffff;
+        --primary: #0066ff;
+        --secondary: #00b894;
+        --text: #1f2937;
+        --muted: #6b7280;
+        --radius: 16px;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: "Inter", system-ui;
+        background: var(--bg);
+        color: var(--text);
+      }
+
+      /* NAVBAR */
+      header {
+        background: #fff;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+      }
+      .nav {
+        max-width: 1200px;
+        margin: auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 20px;
+      }
+      .logo {
+        font-weight: 800;
+        font-size: 1.3rem;
+        color: var(--primary);
+      }
+      .nav button {
+        background: var(--primary);
+        color: #fff;
+        border: none;
+        padding: 10px 18px;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      /* HERO */
+      .hero {
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 20px;
+        display: grid;
+        grid-template-columns: 1.2fr 1fr;
+        gap: 30px;
+        align-items: center;
+      }
+      .hero h1 {
+        font-size: 2.6rem;
+        margin: 0 0 14px;
+      }
+      .hero p {
+        color: var(--muted);
+        font-size: 1.05rem;
+      }
+      .hero-actions {
+        margin-top: 20px;
+        display: flex;
+        gap: 14px;
+      }
+      .hero-actions button {
+        padding: 14px 22px;
+        border-radius: 14px;
+        border: none;
+        font-weight: 600;
+        cursor: pointer;
+        font-size: 1rem;
+      }
+      .buy {
+        background: var(--primary);
+        color: #fff;
+      }
+      .sell {
+        background: #fff;
+        color: var(--primary);
+        border: 1px solid #dbe3ff;
+      }
+
+      .hero-card {
+        background: linear-gradient(160deg, #ffffff, #f3f7ff);
+        border-radius: 24px;
+        padding: 30px;
+        box-shadow: 0 30px 70px rgba(0, 0, 0, 0.1);
+      }
+
+      /* LISTINGS */
+      .section {
+        max-width: 1200px;
+        margin: 60px auto;
+        padding: 0 20px;
+      }
+      .section h2 {
+        font-size: 1.9rem;
+        margin-bottom: 6px;
+      }
+      .section p {
+        color: var(--muted);
+        margin-bottom: 26px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 22px;
+      }
+
+      .bike-card {
+        background: var(--card);
+        border-radius: var(--radius);
+        overflow: hidden;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+        transition: 0.25s;
+      }
+      .bike-card:hover {
+        transform: translateY(-6px);
+      }
+      .bike-img {
+        height: 160px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #e5edff, #f7faff);
+      }
+      .bike-img img {
+        max-height: 140px;
+        width: auto;
+        display: block;
+      }
+
+      .bike-body {
+        padding: 16px;
+      }
+      .bike-body h3 {
+        margin: 0;
+        font-size: 1.05rem;
+      }
+      .bike-body .meta {
+        color: var(--muted);
+        font-size: 0.85rem;
+        margin: 6px 0;
+      }
+      .price {
+        font-weight: 800;
+        font-size: 1.2rem;
+      }
+
+      /* SELL FORM */
+      .sell-box {
+        background: var(--card);
+        border-radius: 24px;
+        padding: 28px;
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.1);
+      }
+      .sell-box form {
+        display: grid;
+        gap: 14px;
+      }
+      input,
+      select {
+        padding: 14px;
+        border-radius: 12px;
+        border: 1px solid #e5e7eb;
+        font-size: 0.95rem;
+      }
+      .sell-box button {
+        margin-top: 8px;
+        background: var(--secondary);
+        color: #fff;
+        border: none;
+        padding: 14px;
+        border-radius: 14px;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      /* FOOTER */
+      footer {
+        margin-top: 80px;
+        padding: 30px;
+        text-align: center;
+        color: var(--muted);
+        background: #fff;
+      }
+
+      @media (max-width: 900px) {
+        .hero {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="nav">
+        <div class="logo">PredictX Bikes</div>
+        <button>Login</button>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div>
+        <h1>Buy & Sell Used Bikes with Confidence</h1>
+        <p>
+          OLX‑style marketplace with PredictX‑level trust. Fair pricing,
+          verified sellers, instant value check.
+        </p>
+        <div class="hero-actions">
+          <button class="buy">Buy a Bike</button>
+          <button class="sell">Sell Your Bike</button>
+        </div>
+      </div>
+      <div class="hero-card">
+        <h3>Instant Bike Price Check</h3>
+        <p class="muted">Get AI‑powered resale value in seconds.</p>
+        <div
+          style="display: flex; gap: 8px; align-items: center; margin-top: 8px"
+        >
+          <div id="modelIndicator" class="muted">Model: checking…</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Popular Used Bikes</h2>
+      <p>Verified listings near you</p>
+      <div class="grid">
+        <div class="bike-card">
+          <div class="bike-img">
+            <img
+              src="{{ url_for('static', filename='images/royal_enfield.svg') }}"
+              alt="Royal Enfield Classic 350"
+            />
+          </div>
+          <div class="bike-body">
+            <h3>Classic 350 (2019)</h3>
+            <div class="meta">18,000 km • 1st Owner</div>
+            <div class="price">₹1,35,000</div>
+          </div>
+        </div>
+        <div class="bike-card">
+          <div class="bike-img">
+            <img
+              src="{{ url_for('static', filename='images/pulsar.svg') }}"
+              alt="Bajaj Pulsar 150"
+            />
+          </div>
+          <div class="bike-body">
+            <h3>Bajaj Pulsar 150</h3>
+            <div class="meta">22,000 km • 2nd Owner</div>
+            <div class="price">₹65,000</div>
+          </div>
+        </div>
+        <div class="bike-card">
+          <div class="bike-img">
+            <img
+              src="{{ url_for('static', filename='images/honda.svg') }}"
+              alt="Honda Shine"
+            />
+          </div>
+          <div class="bike-body">
+            <h3>Honda Shine</h3>
+            <div class="meta">15,500 km • 1st Owner</div>
+            <div class="price">₹58,000</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Sell Your Bike</h2>
+      <p>Get best resale price instantly</p>
+      <div class="sell-box">
+        <form id="predictForm">
+          <input name="model_name" placeholder="Bike Model (optional)" />
+          <input
+            name="year"
+            type="number"
+            placeholder="Manufacturing Year (e.g., 2018)"
+            required
+          />
+          <input
+            name="km_driven"
+            type="number"
+            placeholder="Kilometers Driven (e.g., 15000)"
+            required
+          />
+          <input
+            name="ex_showroom_price"
+            type="number"
+            placeholder="Ex-Showroom Price (INR) e.g., 85000"
+            required
+          />
+          <select name="owner">
+            <option value="">Owner Type (optional)</option>
+            <option value="1st owner">1st Owner</option>
+            <option value="2nd owner">2nd Owner</option>
+            <option value="3rd owner">3rd Owner</option>
+          </select>
+          <select name="seller_type">
+            <option value="">Seller Type (optional)</option>
+            <option value="individual">Individual</option>
+            <option value="dealer">Dealer</option>
+            <option value="trustmark dealer">Trustmark Dealer</option>
+          </select>
+
+          <label style="display: flex; align-items: center; gap: 8px">
+            <input type="checkbox" name="apply_adjustments" /> Apply OLX-like
+            adjustments
+          </label>
+
+          <div
+            style="
+              display: flex;
+              gap: 8px;
+              align-items: center;
+              margin-top: 6px;
+            "
+          >
+            <button type="submit">Check Price</button>
+            <button
+              type="button"
+              id="testModelBtn"
+              style="
+                background: #eef6ff;
+                color: var(--primary);
+                border: none;
+                padding: 10px 14px;
+                border-radius: 12px;
+              "
+            >
+              Test Model
+            </button>
+          </div>
+        </form>
+
+        <div id="predictResult" style="margin-top: 12px; display: none">
+          <div id="error" style="color: #b00020; margin-bottom: 8px"></div>
+          <div
+            id="modelRes"
+            style="background: #f3f8ff; padding: 12px; border-radius: 8px"
+          >
+            <div class="muted">Predicted (model)</div>
+            <div class="price">₹ <span id="modelPrice">0</span></div>
+            <div id="adjustedWrap" style="display: none; margin-top: 8px">
+              <div class="muted">After adjustments</div>
+              <div class="price" style="color: var(--primary)">
+                ₹ <span id="adjustedPrice">0</span>
+              </div>
+            </div>
+            <details id="breakdown" style="margin-top: 8px; display: none">
+              <summary>View adjustment breakdown</summary>
+              <pre id="breakdownPre"></pre>
+            </details>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>© 2025 PredictX Bikes • Inspired by OLX & PredictX UI</footer>
+
+    <script>
+      // Helper: animate numbers
+      function animateNumber(el, start, end, duration = 700) {
+        if (!el) return;
+        const range = end - start;
+        const startTime = performance.now();
+        function step(now) {
+          const t = Math.min((now - startTime) / duration, 1);
+          const val = Math.round(start + range * t);
+          el.textContent = val.toLocaleString();
+          if (t < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      }
+
+      async function checkModel() {
+        try {
+          const res = await fetch("/health");
+          const j = await res.json();
+          const el = document.getElementById("modelIndicator");
+          if (j.model_loaded) {
+            el.textContent = "Model loaded — ready";
+          } else {
+            el.textContent = "Model not loaded";
+          }
+          return j;
+        } catch (err) {
+          const el = document.getElementById("modelIndicator");
+          el.textContent = "Model check failed";
+          return { model_loaded: false, load_error: err.toString() };
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        checkModel();
+
+        const form = document.getElementById("predictForm");
+        const result = document.getElementById("predictResult");
+        const modelPrice = document.getElementById("modelPrice");
+        const adjustedPrice = document.getElementById("adjustedPrice");
+        const adjustedWrap = document.getElementById("adjustedWrap");
+        const breakdown = document.getElementById("breakdown");
+        const breakdownPre = document.getElementById("breakdownPre");
+        const errorEl = document.getElementById("error");
+        const testBtn = document.getElementById("testModelBtn");
+
+        testBtn.addEventListener("click", async () => {
+          const j = await checkModel();
+          if (!j.model_loaded)
+            alert("Model not loaded: " + (j.load_error || "unknown"));
+          else alert("Model is loaded — ready to predict.");
+        });
+
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          errorEl.textContent = "";
+          result.style.display = "none";
+
+          const data = new FormData(form);
+          const payload = {
+            year: parseInt(data.get("year")),
+            km_driven: parseFloat(data.get("km_driven")),
+            ex_showroom_price: parseFloat(data.get("ex_showroom_price")),
+            owner: data.get("owner") || undefined,
+            seller_type: data.get("seller_type") || undefined,
+            model_name: data.get("model_name") || undefined,
+            apply_adjustments: !!data.get("apply_adjustments"),
+          };
+
+          try {
+            const res = await fetch("/predict", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payload),
+            });
+            const j = await res.json();
+            if (!res.ok) {
+              throw new Error(j.error || "Prediction failed");
+            }
+
+            result.style.display = "block";
+            const base = Math.round(j.predicted_selling_price || 0);
+            animateNumber(
+              modelPrice,
+              Math.max(0, Math.round(base * 0.6)),
+              base
+            );
+
+            if (
+              j.adjusted_prediction &&
+              j.adjusted_prediction !== j.predicted_selling_price
+            ) {
+              adjustedWrap.style.display = "block";
+              const adj = Math.round(j.adjusted_prediction || 0);
+              animateNumber(
+                adjustedPrice,
+                Math.max(0, Math.round(adj * 0.6)),
+                adj
+              );
+              breakdown.style.display = "block";
+              breakdownPre.textContent = JSON.stringify(
+                j.breakdown || {},
+                null,
+                2
+              );
+            } else {
+              adjustedWrap.style.display = "none";
+              breakdown.style.display = "none";
+            }
+          } catch (err) {
+            errorEl.textContent = err.toString();
+            result.style.display = "block";
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
